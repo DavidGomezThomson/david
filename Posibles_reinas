@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+from matplotlib.patches import Circle, Polygon, Rectangle
+import numpy as np
+
+fig, ax = plt.subplots(figsize=(6, 8))
+
+# --- Funciones auxiliares ---
+def add_circle(x, y, r, **kwargs):
+    ax.add_patch(Circle((x, y), r, **kwargs))
+
+def add_polygon(points, **kwargs):
+    ax.add_patch(Polygon(points, closed=True, **kwargs))
+
+# --- Corona (parte superior) ---
+for i in range(5):
+    add_circle(0.2 + i * 0.15, 0.9, 0.05, color="black")
+
+# --- Parte superior del cuerpo ---
+add_polygon([(0.1, 0.85), (0.4, 1.0), (0.6, 1.0), (0.9, 0.85)],
+            color="black")
+
+# --- Cuello ---
+add_polygon([(0.3, 0.75), (0.2, 0.85), (0.8, 0.85), (0.7, 0.75)],
+            color="black")
+
+# --- Cuerpo principal (forma trapezoidal) ---
+add_polygon([(0.2, 0.1), (0.1, 0.75), (0.9, 0.75), (0.8, 0.1)],
+            color="black")
+
+# --- Base ---
+ax.add_patch(Rectangle((0.1, 0.0), 0.8, 0.1, color="black"))
+
+# --- Configuración de la figura ---
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1.1)
+ax.set_aspect('equal')
+ax.axis("off")
+
+plt.show()
+#------------------------------------------------------------------------------------------------------------
