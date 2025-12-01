@@ -1,38 +1,51 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Polygon, Rectangle
-import numpy as np
 
 fig, ax = plt.subplots(figsize=(6, 8))
 
 # --- Funciones auxiliares ---
-def add_circle(x, y, r, **kwargs):
-    ax.add_patch(Circle((x, y), r, **kwargs))
+def circ(x, y, r):
+    ax.add_patch(Circle((x, y), r, color="black"))
 
-def add_polygon(points, **kwargs):
-    ax.add_patch(Polygon(points, closed=True, **kwargs))
+def poly(points):
+    ax.add_patch(Polygon(points, closed=True, color="black"))
 
-# --- Corona (parte superior) ---
-for i in range(5):
-    add_circle(0.2 + i * 0.15, 0.9, 0.05, color="black")
+# --- Corona simplificada ---
+# Tres esferas arriba (más simple, más limpio)
+circ(0.5, 0.92, 0.045)
+circ(0.38, 0.90, 0.035)
+circ(0.62, 0.90, 0.035)
 
-# --- Parte superior del cuerpo ---
-add_polygon([(0.1, 0.85), (0.4, 1.0), (0.6, 1.0), (0.9, 0.85)],
-            color="black")
+# Base de la corona
+poly([
+    (0.32, 0.88),
+    (0.68, 0.88),
+    (0.60, 0.83),
+    (0.40, 0.83)
+])
 
-# --- Cuello ---
-add_polygon([(0.3, 0.75), (0.2, 0.85), (0.8, 0.85), (0.7, 0.75)],
-            color="black")
+# --- Cuello más estilizado ---
+poly([
+    (0.38, 0.83),
+    (0.32, 0.78),
+    (0.68, 0.78),
+    (0.62, 0.83)
+])
 
-# --- Cuerpo principal (forma trapezoidal) ---
-add_polygon([(0.2, 0.1), (0.1, 0.75), (0.9, 0.75), (0.8, 0.1)],
-            color="black")
+# --- Cuerpo principal (forma elegante) ---
+poly([
+    (0.25, 0.15),  # abajo izquierda
+    (0.18, 0.78),  # arriba izquierda
+    (0.82, 0.78),  # arriba derecha
+    (0.75, 0.15)   # abajo derecha
+])
 
 # --- Base ---
-ax.add_patch(Rectangle((0.1, 0.0), 0.8, 0.1, color="black"))
+ax.add_patch(Rectangle((0.18, 0.05), 0.64, 0.10, color="black"))
 
-# --- Configuración de la figura ---
+# --- Configuración final ---
 ax.set_xlim(0, 1)
-ax.set_ylim(0, 1.1)
+ax.set_ylim(0, 1)
 ax.set_aspect('equal')
 ax.axis("off")
 
