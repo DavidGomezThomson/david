@@ -1,53 +1,64 @@
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle, Polygon, Rectangle
+from matplotlib.patches import Circle, Polygon, Ellipse
 
-fig, ax = plt.subplots(figsize=(6, 8))
+fig, ax = plt.subplots(figsize=(6, 10))
 
-# --- Funciones auxiliares ---
-def circ(x, y, r):
-    ax.add_patch(Circle((x, y), r, color="black"))
+# --------- Funciones auxiliares ---------
+def circ(x, y, r, **k):
+    ax.add_patch(Circle((x, y), r, **k))
 
-def poly(points):
-    ax.add_patch(Polygon(points, closed=True, color="black"))
+def poly(pts, **k):
+    ax.add_patch(Polygon(pts, closed=True, **k))
 
-# --- Corona simplificada ---
-# Tres esferas arriba (más simple, más limpio)
-circ(0.5, 0.92, 0.045)
-circ(0.38, 0.90, 0.035)
-circ(0.62, 0.90, 0.035)
+def ellipse(x, y, w, h, **k):
+    ax.add_patch(Ellipse((x, y), w, h, **k))
 
-# Base de la corona
+# --------- Rostro ---------
+ellipse(0.5, 0.62, 0.35, 0.45, facecolor="#f8d3b0", edgecolor="black", linewidth=2)
+
+# Ojos
+ellipse(0.43, 0.67, 0.08, 0.05, facecolor="white", edgecolor="black")
+ellipse(0.57, 0.67, 0.08, 0.05, facecolor="white", edgecolor="black")
+circ(0.43, 0.67, 0.02, color="black")
+circ(0.57, 0.67, 0.02, color="black")
+
+# Boca
+poly([(0.45, 0.55), (0.55, 0.55), (0.50, 0.52)],
+     facecolor="#c04055", edgecolor="black", linewidth=1.5)
+
+# --------- Pelo ---------
 poly([
-    (0.32, 0.88),
-    (0.68, 0.88),
-    (0.60, 0.83),
-    (0.40, 0.83)
-])
+    (0.18, 0.80), (0.82, 0.80),
+    (0.90, 0.50), (0.70, 0.35),
+    (0.30, 0.35), (0.10, 0.50)
+], facecolor="#3d2b1f", edgecolor="black", linewidth=2)
 
-# --- Cuello más estilizado ---
+# --------- Corona elegante ---------
 poly([
-    (0.38, 0.83),
-    (0.32, 0.78),
-    (0.68, 0.78),
-    (0.62, 0.83)
-])
+    (0.30, 0.90), (0.70, 0.90),
+    (0.62, 1.05), (0.50, 0.92), (0.38, 1.05)
+], facecolor="#f4d142", edgecolor="black", linewidth=2)
 
-# --- Cuerpo principal (forma elegante) ---
+# Gemas
+circ(0.50, 0.97, 0.03, facecolor="#ff3366", edgecolor="black")
+circ(0.40, 0.93, 0.02, facecolor="#66aaff", edgecolor="black")
+circ(0.60, 0.93, 0.02, facecolor="#66aaff", edgecolor="black")
+
+# --------- Vestido ---------
 poly([
-    (0.25, 0.15),  # abajo izquierda
-    (0.18, 0.78),  # arriba izquierda
-    (0.82, 0.78),  # arriba derecha
-    (0.75, 0.15)   # abajo derecha
-])
+    (0.25, 0.00), (0.75, 0.00),
+    (0.90, 0.35), (0.10, 0.35)
+], facecolor="#5511aa", edgecolor="black", linewidth=2)
 
-# --- Base ---
-ax.add_patch(Rectangle((0.18, 0.05), 0.64, 0.10, color="black"))
+# Cintura
+ellipse(0.5, 0.35, 0.55, 0.10, facecolor="#441188", edgecolor="black")
 
-# --- Configuración final ---
+# --------- Ajustes ---------
 ax.set_xlim(0, 1)
-ax.set_ylim(0, 1)
-ax.set_aspect('equal')
+ax.set_ylim(0, 1.15)
+ax.set_aspect("equal")
 ax.axis("off")
 
 plt.show()
+
 #------------------------------------------------------------------------------------------------------------
