@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
+# Importamos las funciones del archivo physics.py
 from physics import n_reinas, filtrar_unicas, dibujar_tablero
 
 
@@ -11,17 +12,20 @@ class NReinasGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Problema de las N-Reinas")
-        self.root.configure(bg="white")
+
+        # Fondo blanco
+        root.configure(bg="white")
 
         # Marco marrón alrededor
         border = tk.Frame(root, bg="#b38764", width=1100, height=750)
         border.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Contenedor principal
+        # Contenido principal en blanco
         container = tk.Frame(border, bg="white")
         container.pack(fill="both", expand=True)
 
-        # Título
+
+        # ------------ TÍTULO ------------
         title = tk.Label(
             container,
             text="Problema de las N-Reinas",
@@ -31,7 +35,7 @@ class NReinasGUI:
         )
         title.pack(pady=20)
 
-        # Entrada superior
+        # ------------ Entrada ------------
         frame_top = tk.Frame(container, bg="white")
         frame_top.pack(pady=15)
 
@@ -43,6 +47,7 @@ class NReinasGUI:
             fg="black"
         ).grid(row=0, column=0, padx=5)
 
+        # Caja donde el usuario describe el número N
         self.entry_n = tk.Entry(
             frame_top,
             font=("Arial", 16),
@@ -52,24 +57,26 @@ class NReinasGUI:
         )
         self.entry_n.grid(row=0, column=1, padx=10)
 
+        # Botón beige redondeado para ejecutar el algoritmo
         btn = tk.Button(
             frame_top,
             text="Resolver",
             font=("Arial", 14, "bold"),
             bg="#e8ddbe",
             fg="#1e1a33",
+            activebackground="#d8cdae",
             relief="flat",
             padx=20,
-            pady=5,
-            command=self.resolver
+            pady=5
         )
         btn.grid(row=0, column=2, padx=10)
+        btn.configure(command=self.resolver)
 
-        # Info
+        # Info debajo
         self.lbl_info = tk.Label(container, text="", font=("Arial", 14), bg="white")
         self.lbl_info.pack(pady=10)
 
-        # Scroll
+        # ------------ Área de scroll ------------
         self.frame_scroll = tk.Frame(container, bg="white")
         self.frame_scroll.pack(fill="both", expand=True)
 
@@ -88,9 +95,21 @@ class NReinasGUI:
 
         self.soluciones = []
         self.n = 0
+        self.columnas = 4 # Número inicial de columnas 
+
+        # Se ejecuta cuando la ventana cambia de tamaño
+        self.root.bind("<Configure>", self.on_resize)
 
     def _on_mousewheel(self, event):
         self.canvas.yview_scroll(int(-event.delta / 120), "units")
+
+    def on_resize(self, event):
+        if event.widget == self.root:
+            new_col = max(1, self.root.winfo_width() // 320) 
+            if new_col != self.columnas:
+                self.columnas = new_col
+                if self.soluciones:
+                    self.mostrar_todas()
 
     def resolver(self):
         try:
@@ -111,16 +130,14 @@ class NReinasGUI:
         self.mostrar_todas()
 
     def mostrar_todas(self):
-        # Limpiar el área
         for widget in self.inner_frame.winfo_children():
             widget.destroy()
 
-        columnas = 4
         fig_size = 2.8
 
         for idx, sol in enumerate(self.soluciones):
-            fila = idx // columnas
-            col = idx % columnas
+            fila = idx // self.columnas
+            col = idx % self.columnas
 
             cont = tk.Frame(self.inner_frame, bg="white")
             cont.grid(row=fila, column=col, padx=20, pady=20)
