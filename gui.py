@@ -16,10 +16,6 @@ class NReinasGUI:
         # Fondo blanco
         root.configure(bg="white")
 
-        # Marco marrón alrededor
-        border = tk.Frame(root, bg="#b38764", width=1100, height=750)
-        border.pack(fill="both", expand=True, padx=10, pady=10)
-
         # Contenido principal en blanco
         container = tk.Frame(border, bg="white")
         container.pack(fill="both", expand=True)
@@ -157,3 +153,4 @@ class NReinasGUI:
                 fg="black",
                 font=("Arial", 12, "bold")
             ).pack(pady=5)
+
