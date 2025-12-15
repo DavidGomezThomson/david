@@ -1,0 +1,7 @@
+import tkinter as tk                # tkinter es la librería estándar de Python para crear interfaces gráficas (ventanas, botones, textos, etc.).
+from gui import NReinasGUI          # Busca un archivo llamado gui.py. Dentro de ese archivo, importa la clase NReinasGUI.
+root = tk.Tk()                      # tk.Tk() crea una ventana vacía. root es una variable que guarda esa ventana. 
+root.geometry("1100x750")           # Define el tamaño inicial de la ventana (Ancho: 1100 píxeles y Alto: 750 píxeles).
+app = NReinasGUI(root)              # Se crea un objeto de clase NReinasGUI. Se le pasa la ventana principal (root) para que pueda "dibujar" dentro de ella.
+                                    # app es la instancia (El progrmaa ya funcionando).
+root.mainloop()                     # Mantiene la ventana abierta y activa mientras el usuario interactúa, sino se abriría y cerraría inmediatamente. 
