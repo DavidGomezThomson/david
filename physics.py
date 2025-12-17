@@ -92,3 +92,8 @@ def dibujar_tablero(ax, sol, n):
     ax.set_xlim(0, n)
     ax.set_ylim(0, n)
     ax.set_aspect("equal")
+
+if __name__ == "__main__":
+    N = 8
+    sols = filtrar_unicas(n_reinas(N))
+    print(f"Soluciones únicas para N={N}: {len(sols)}")
